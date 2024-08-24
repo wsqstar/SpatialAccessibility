@@ -5,8 +5,7 @@ This is a library for spatial accessibility analysis in Python.
 To install the library, you can use pip:
 
 ```
-<!--  this has not done yet -->
-pip install spatialaccessibility
+pip install -i https://test.pypi.org/simple/ SpatialAccessibility==0.0.1
 
 ```
 or if you ara using Colab:
