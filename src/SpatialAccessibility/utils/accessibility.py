@@ -82,15 +82,15 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
     # 构建 Fij 矩阵，形状为 (demandpt, supplypt)，然后进行转置
     Fij = np.transpose(vec_Fij.reshape((supplypt, demandpt), order='F'))
     # 构建 D 矩阵，形状为 (demandpt, demandpt)
-    D = np.diag(vec_D)
+    # D = np.diag(vec_D)
 
     # 计算平均可达性向量 A
-    A = np.ones((demandpt, 1)) * ave_accessibility
+    # A = np.ones((demandpt, 1)) * ave_accessibility
     if print_out:
         print(f"Fij shape: {Fij.shape}")
-        print(f"D shape: {D.shape}")
+        # print(f"D shape: {D.shape}")
 
-    # 计算优化前的可达性
+    # 计算可达性
     CurrentAcc = pd.DataFrame((DestinationSupply.values.T @ Fij.T).T, columns=['CurrentAcc'])
 
     # 打印当前标准差的摘要
