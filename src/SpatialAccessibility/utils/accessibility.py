@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8,ddof=0, print_out=True):
+def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8,set_ddof=1, print_out=True):
     """
     计算可达性函数
 
@@ -95,8 +95,8 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
 
     # 打印当前标准差的摘要
     if print_out:
-        print(f"Current Standard deviation: {round(CurrentAcc['CurrentAcc'].std(ddof=ddof), 4)}")
-        print(f"Current Variance: {round(CurrentAcc['CurrentAcc'].var(ddof=ddof), 4)}")
+        print(f"Current Standard deviation: {round(CurrentAcc['CurrentAcc'].std(ddof=set_ddof), 4)}")
+        print(f"Current Variance: {round(CurrentAcc['CurrentAcc'].var(ddof=set_ddof), 4)}")
 
     # 计算描述性统计
     summary_CurrentAcc = CurrentAcc['CurrentAcc'].describe().round(3)
