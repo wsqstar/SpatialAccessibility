@@ -96,6 +96,9 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
     # 打印当前标准差的摘要
     if print_out:
         print(f"Current Standard deviation: {round(CurrentAcc['CurrentAcc'].std(), 3)}")
+        print(f"Current Variance: {round(CurrentAcc['CurrentAcc'].var(), 3)}")
+
+
 
     # 计算描述性统计
     summary_CurrentAcc = CurrentAcc['CurrentAcc'].describe().round(3)
@@ -108,3 +111,6 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
         print(summary_Acc)
 
     return CurrentAcc, summary_Acc
+
+
+
