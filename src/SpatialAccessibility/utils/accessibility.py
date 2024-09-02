@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8,set_ddof=1, print_out=True,use_copy=True):
+def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8, set_ddof=1, print_out=True, use_copy=True):
     """
     计算可达性函数
 
@@ -61,22 +61,22 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
 
     # 根据可达性模型计算距离衰减效应 f(dij)
     if AccModel == '2SFCA':
-        ODpotent['fdij'] = np.where(ODpotent['TravelCost'] <= Threshold, 1, 0)
+        ODpotent.loc[:, 'fdij'] = np.where(ODpotent['TravelCost'] <= Threshold, 1, 0)
     elif AccModel == 'Gravity':
         if print_out:
             print(f"Gravity method applied! beta is {beta}")
-        ODpotent['fdij'] = ODpotent['TravelCost'] ** (-1 * beta)
+        ODpotent.loc[:, 'fdij'] = ODpotent['TravelCost'] ** (-1 * beta)
     else:
-        ODpotent['fdij'] = np.exp(-1 * ODpotent['TravelCost'] * Expon)
+        ODpotent.loc[:, 'fdij'] = np.exp(-1 * ODpotent['TravelCost'] * Expon)
 
     # 计算距离衰减效应加权的需求人口 D*(f(dij))
-    ODpotent['Dfdkj'] = ODpotent['O_Demand'] * ODpotent['fdij']
+    ODpotent.loc[:, 'Dfdkj'] = ODpotent['O_Demand'] * ODpotent['fdij']
     # 计算每个供应点的总距离加权需求人口
     Sum_Dfdki = ODpotent.groupby('DestinationID')['Dfdkj'].sum().reset_index()
 
     # 合并数据，计算 Fij 矩阵
     ODpotent = ODpotent.merge(Sum_Dfdki, on='DestinationID', suffixes=('', '_sum'))
-    ODpotent['Fij'] = ODpotent['fdij'] / ODpotent['Dfdkj_sum']
+    ODpotent.loc[:, 'Fij'] = ODpotent['fdij'] / ODpotent['Dfdkj_sum']
 
     # 按照 'OriginID' 和 'DestinationID' 对 ODpotent 进行排序
     ODpotent = ODpotent.sort_values(by=['OriginID', 'DestinationID'])
