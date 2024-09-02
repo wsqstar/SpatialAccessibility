@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 packages = ["src/SpatialAccessibility"]
 [project]
 name = "SpatialAccessibility"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
   { name="Shiqi Wang", email="qtec@outlook.com" },
 ]
