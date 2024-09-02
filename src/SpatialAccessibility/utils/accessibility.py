@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
+import time
 
-def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8, set_ddof=1, print_out=True, use_copy=True):
+def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8, set_ddof=1, print_out=True, use_copy=True,time_recorder = False):
     """
     计算可达性函数
 
@@ -17,6 +18,8 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
     CurrentAcc (DataFrame): 当前可达性结果
     summary_Acc (DataFrame): 可达性描述性统计结果
     """
+    # 记录开始时间
+    start_time = time.time()
     # 设置 pandas 显示浮点数的精度，显示 10 位小数
     pd.set_option('display.float_format', lambda x: '%.10f' % x)
     # 设置 numpy 显示精度
@@ -111,7 +114,12 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
         'Current_Acc': summary_CurrentAcc
     }).T
 
+    # 记录结束时间并计算用时
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+
     if print_out:
         print(summary_Acc)
+        print(f"\nFunction 'calculate_accessibility' took {elapsed_time:.4f} seconds to execute.")
 
     return CurrentAcc, summary_Acc
