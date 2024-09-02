@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8,set_ddof=1, print_out=True):
+def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8,set_ddof=1, print_out=True,use_copy=True):
     """
     计算可达性函数
 
@@ -33,9 +33,15 @@ def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=
     DestinationSupply = Destination_df['D_Supply']
 
     # 提取 OD 数据
-    OD_df = InputData_df[['OriginID', 'DestinationID', 'TravelCost']].copy()
-    Distance = OD_df['TravelCost']
-    ODpotent = InputData_df[['OriginID', 'O_Demand', 'DestinationID', 'TravelCost']].copy()
+    if use_copy:
+        OD_df = InputData_df[['OriginID', 'DestinationID', 'TravelCost']].copy()
+        Distance = OD_df['TravelCost']
+        ODpotent = InputData_df[['OriginID', 'O_Demand', 'DestinationID', 'TravelCost']].copy()
+    else:
+        OD_df = InputData_df[['OriginID', 'DestinationID', 'TravelCost']]
+        Distance = OD_df['TravelCost']
+        # here the ODpotent is a view of the original data frame
+        ODpotent = InputData_df[['OriginID', 'O_Demand', 'DestinationID', 'TravelCost']]
 
     # 计算总供应量
     TotalSupply = DestinationSupply.sum()
