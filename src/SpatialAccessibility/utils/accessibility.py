@@ -2,6 +2,29 @@ import pandas as pd
 import numpy as np
 import time
 
+"""
+计算可达性函数
+
+此函数用于计算给定输入数据集的可达性结果。
+
+参数:
+InputData_df (DataFrame): 包含需求点和供应点信息的输入数据集。
+AccModel (str): 可达性模型，默认为 'Gravity'。可选值有 '2SFCA'、'Gravity' 等。
+beta (float): 重力模型参数，默认为 1。
+Threshold (int): 2SFCA 模型的阈值，默认为 5000。
+Expon (float): 指数模型的参数，默认为 0.8。
+print_out (bool): 是否打印输出结果，默认为 True。
+use_copy (bool): 是否使用数据的副本进行操作，默认为 True。
+time_recorder (bool): 是否记录函数执行时间，默认为 False。
+
+返回:
+CurrentAcc (DataFrame): 当前的可达性结果。
+summary_Acc (DataFrame): 可达性的描述性统计结果。
+
+该函数首先提取需求点和供应点的数据并进行去重处理，然后根据不同的可达性模型计算距离衰减效应，
+接着计算加权的需求人口，再通过一系列矩阵运算得出每个需求点的可达性得分，
+最后计算可达性得分的描述性统计信息并返回结果。
+"""
 def calculate_accessibility(InputData_df, AccModel='Gravity', beta=1, Threshold=5000, Expon=0.8, set_ddof=1, print_out=True, use_copy=True,time_recorder = False):
     """
     计算可达性函数
