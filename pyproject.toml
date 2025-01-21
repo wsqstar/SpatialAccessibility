@@ -1,12 +1,13 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.26.3"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/SpatialAccessibility"]
+
 [project]
 name = "SpatialAccessibility"
-version = "0.0.7"
+version = "0.0.8"
 authors = [
   { name="Shiqi Wang", email="qtec@outlook.com" },
 ]
