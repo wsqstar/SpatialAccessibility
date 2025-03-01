@@ -1,2 +1,2 @@
-from .accessibility  import calculate_accessibility
+from .accessibility  import calculate_accessibility,calculate_accessibility_fca
 from .compare import read_accessibility_file, calculate_df_parameters, batch_read_accessibility_results, compare_accessibility_results, generate_text_report, generate_image_report
