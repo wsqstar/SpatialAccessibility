@@ -7,7 +7,7 @@ packages = ["src/SpatialAccessibility"]
 
 [project]
 name = "SpatialAccessibility"
-version = "0.0.10"
+version = "0.0.11"
 authors = [
   { name="Shiqi Wang", email="qtec@outlook.com" },
 ]
