@@ -9,7 +9,7 @@ This is a library for spatial accessibility analysis in Python， hosted on http
 To install the library, you can use pip:
 
 ```
-pip install SpatialAccessibility
+!pip install SpatialAccessibility --index-url https://pypi.org/simple
 
 ```
 or if you ara using Colab:
