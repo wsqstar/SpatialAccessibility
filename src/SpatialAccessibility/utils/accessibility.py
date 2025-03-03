@@ -171,15 +171,36 @@ def calculate_accessibility_fca(Origin_df, Destination_df, OD_df=None, AccModel=
     """
     # 记录开始时间
     start_time = time.time()
+    print("[DEBUG] OD_df is None?", OD_df is None)  # 应输出True
 
     # 如果没有提供 OD_df，则根据经纬度计算
     if OD_df is None:
+        print('Calculating OD matrix from coordinates...')
         OD_list = []
+        
+        # 遍历所有组合
         for _, origin in Origin_df.iterrows():
             for _, destination in Destination_df.iterrows():
-                distance = geodesic((origin['lat'], origin['lng']), (destination['lat'], destination['lng'])).meters
-                OD_list.append([origin['OriginID'], destination['DestinationID'], distance])
-        OD_df = pd.DataFrame(OD_list, columns=['OriginID', 'DestinationID', 'TravelCost'])
+                origin_coords = (origin['lat'], origin['lng'])  # 根据数据实际列名调整
+                dest_coords = (destination['lat'], destination['lng'])
+                
+                # 计算距离
+                distance = geodesic(origin_coords, dest_coords).meters
+                
+                # 正确提取标量值
+                OD_list.append([
+                    origin['OriginID'],        # 标量值
+                    origin['O_Demand'],        # 标量值
+                    destination['DestinationID'],  # 标量值
+                    destination['D_Supply'],   # 标量值
+                    distance                   # 标量值
+                ])
+        
+        # 创建DataFrame（列名与数据对齐）
+        OD_df = pd.DataFrame(
+            OD_list,
+            columns=['OriginID', 'O_Demand', 'DestinationID', 'D_Supply', 'TravelCost']
+        )
 
     # 提取需求点和供应点数据
     OriginID = Origin_df['OriginID']
